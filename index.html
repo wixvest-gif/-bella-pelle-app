@@ -7,185 +7,635 @@
 
 <style>
 body{
+margin:0;
 font-family:Arial;
 background:#f9e3ea;
-margin:0;
-padding:0;
 color:#6d4c55;
+padding-bottom:80px;
 }
 
 header{
-padding:25px;
 text-align:center;
-font-size:32px;
-font-weight:bold;
 background:#f4d5df;
+padding:25px 15px;
+}
+
+h1{
+margin:0;
+font-size:34px;
 }
 
 .sub{
-text-align:center;
-margin-top:-10px;
-margin-bottom:20px;
+margin-top:8px;
+font-size:18px;
 }
 
 .container{
 padding:15px;
 }
 
-.menu{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-bottom:20px;
-}
-
-.btn{
-background:white;
-border:none;
-padding:18px;
-border-radius:18px;
-font-size:18px;
-font-weight:bold;
-color:#6d4c55;
-box-shadow:0 2px 8px rgba(0,0,0,0.08);
-}
-
 .card{
 background:white;
+border-radius:24px;
 padding:20px;
-border-radius:22px;
-margin-bottom:20px;
-box-shadow:0 2px 10px rgba(0,0,0,0.08);
+margin-bottom:18px;
+box-shadow:0 3px 12px rgba(0,0,0,0.08);
 }
 
-.title{
-font-size:28px;
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
+}
+
+h2{
+font-size:26px;
+margin-top:0;
+}
+
+input,select,textarea{
+width:100%;
+box-sizing:border-box;
+padding:14px;
+border:1px solid #e4cfd6;
+border-radius:15px;
+margin:7px 0;
+font-size:16px;
+}
+
+textarea{
+min-height:70px;
+}
+
+.salvar{
+background:#c9a45c;
+color:white;
+border:none;
+border-radius:18px;
+padding:16px;
+font-size:17px;
 font-weight:bold;
-margin-bottom:15px;
+width:100%;
 }
 
 .box{
 background:#faf5f7;
-padding:25px;
 border-radius:20px;
-margin-bottom:15px;
+padding:22px;
+margin:12px 0;
 text-align:center;
-font-size:25px;
+font-size:26px;
 font-weight:bold;
 }
 
 .box span{
 display:block;
-font-size:18px;
-font-weight:normal;
-margin-top:8px;
-}
-
-input{
-width:100%;
-padding:15px;
-border-radius:15px;
-border:1px solid #ddd;
-margin-bottom:10px;
 font-size:16px;
+font-weight:normal;
+margin-top:5px;
 }
 
-.salvar{
-width:100%;
-padding:18px;
+.item{
+background:#faf5f7;
+border-left:5px solid #c9a45c;
+border-radius:18px;
+padding:14px;
+margin:10px 0;
+}
+
+.item button{
+margin-top:8px;
+margin-right:5px;
+border:none;
+border-radius:12px;
+padding:10px;
 background:#c9a45c;
 color:white;
+}
+
+.delete{
+background:#d88 !important;
+}
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+box-shadow:0 -3px 12px rgba(0,0,0,0.1);
+}
+
+.nav button{
 border:none;
-border-radius:18px;
-font-size:18px;
+background:white;
+padding:10px 2px;
+font-size:12px;
+color:#6d4c55;
+}
+
+.nav .ativo{
+background:#f4d5df;
 font-weight:bold;
 }
 
-footer{
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:5px;
+}
+
+.day{
+background:#faf5f7;
+border-radius:10px;
+min-height:45px;
+padding:5px;
 text-align:center;
-padding:30px;
-color:#8d7b81;
+font-size:12px;
+}
+
+.day mark{
+display:block;
+background:#c9a45c;
+color:white;
+border-radius:10px;
+font-size:10px;
+margin-top:3px;
 }
 </style>
 </head>
 
 <body>
 
-<header>Bella Pelle Beauty</header>
-
+<header>
+<h1>Bella Pelle Beauty</h1>
 <div class="sub">
 Agenda PRO • Clientes • Financeiro
 </div>
+</header>
 
 <div class="container">
 
-<div class="menu">
-<button class="btn">Clientes</button>
-<button class="btn">Agenda</button>
-<button class="btn">Calendário</button>
-<button class="btn">Financeiro</button>
-</div>
+<div id="inicio" class="page active">
 
 <div class="card">
-<div class="title">Resumo da agenda</div>
+<h2>Resumo da agenda</h2>
 
 <div class="box">
-0
+<span id="totalClientes">0</span>
 <span>Clientes</span>
 </div>
 
 <div class="box">
-0
+<span id="totalHoje">0</span>
 <span>Hoje</span>
 </div>
 
 <div class="box">
-0
+<span id="totalMes">0</span>
 <span>Este mês</span>
 </div>
 
 </div>
 
 <div class="card">
-<div class="title">Novo agendamento</div>
+<h2>Próximos atendimentos</h2>
+<div id="listaProximos"></div>
+</div>
 
-<input placeholder="Nome da cliente">
-<input placeholder="Procedimento">
-<input type="date">
-<input type="time">
-<input placeholder="Valor">
+</div>
 
-<button class="salvar">
-Salvar Agendamento
+<div id="clientes" class="page">
+
+<div class="card">
+<h2>Cadastrar cliente</h2>
+
+<input id="clienteNome" placeholder="Nome da cliente">
+<input id="clienteTel" placeholder="WhatsApp">
+<textarea id="clienteObs" placeholder="Observações"></textarea>
+
+<button class="salvar" onclick="salvarCliente()">
+Salvar cliente
 </button>
 
 </div>
 
 <div class="card">
-<div class="title">Financeiro</div>
+<h2>Clientes cadastradas</h2>
+<div id="listaClientes"></div>
+</div>
+
+</div>
+
+<div id="agenda" class="page">
+
+<div class="card">
+<h2>Novo agendamento</h2>
+
+<select id="agCliente"></select>
+
+<select id="agProc">
+<option>Fio a fio</option>
+<option>Brasileiro</option>
+<option>Mega brasileiro</option>
+<option>Fox Eyes</option>
+<option>Manutenção leve</option>
+<option>Manutenção média</option>
+<option>Manutenção avançada</option>
+<option>Design de sobrancelha</option>
+<option>Design com henna</option>
+<option>Brow lamination</option>
+<option>Lash lifting</option>
+</select>
+
+<input id="agData" type="date">
+<input id="agHora" type="time">
+<input id="agValor" placeholder="Valor">
+
+<select id="agStatus">
+<option>Confirmado</option>
+<option>Pendente</option>
+<option>Realizado</option>
+<option>Cancelado</option>
+</select>
+
+<textarea id="agObs" placeholder="Observações"></textarea>
+
+<button class="salvar" onclick="salvarAgendamento()">
+Salvar agendamento
+</button>
+
+</div>
+
+<div class="card">
+<h2>Agendamentos</h2>
+<div id="listaAgenda"></div>
+</div>
+
+</div>
+
+<div id="calendario" class="page">
+<div class="card">
+<h2>Calendário do mês</h2>
+<div id="calendarioGrid" class="calendar"></div>
+</div>
+</div>
+
+<div id="financeiro" class="page">
+
+<div class="card">
+
+<h2>Financeiro do dia</h2>
+
+<input id="finData" type="date" onchange="render()">
 
 <div class="box">
-R$0,00
-<span>Entrou hoje</span>
+<span id="entradaDia">R$ 0,00</span>
+<span>Entrou no dia</span>
 </div>
 
 <div class="box">
-R$0,00
-<span>Saiu hoje</span>
+<span id="saidaDia">R$ 0,00</span>
+<span>Saiu no dia</span>
 </div>
 
 <div class="box">
-R$0,00
-<span>Saldo</span>
+<span id="saldoDia">R$ 0,00</span>
+<span>Saldo do dia</span>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Nova movimentação</h2>
+
+<select id="movTipo">
+<option>Entrada</option>
+<option>Saída</option>
+</select>
+
+<input id="movValor" placeholder="Valor">
+<input id="movDesc" placeholder="Descrição">
+
+<button class="salvar" onclick="salvarMov()">
+Salvar movimentação
+</button>
+
+</div>
+
+<div class="card">
+<h2>Histórico financeiro</h2>
+<div id="listaFin"></div>
 </div>
 
 </div>
 
 </div>
 
-<footer>
-Bella Pelle Beauty ©
-</footer>
+<div class="nav">
+
+<button class="ativo" onclick="abrir('inicio',this)">
+🏠<br>Início
+</button>
+
+<button onclick="abrir('clientes',this)">
+👩<br>Clientes
+</button>
+
+<button onclick="abrir('agenda',this)">
+📅<br>Agenda
+</button>
+
+<button onclick="abrir('calendario',this)">
+🗓️<br>Calend.
+</button>
+
+<button onclick="abrir('financeiro',this)">
+💰<br>Financ.
+</button>
+
+</div>
+
+<script>
+
+const KC='bb_clientes_v10';
+const KA='bb_agenda_v10';
+const KF='bb_fin_v10';
+
+function get(k){
+return JSON.parse(localStorage.getItem(k)||'[]');
+}
+
+function set(k,v){
+localStorage.setItem(k,JSON.stringify(v));
+}
+
+function hoje(){
+return new Date().toISOString().slice(0,10);
+}
+
+function abrir(id,btn){
+
+document.querySelectorAll('.page')
+.forEach(p=>p.classList.remove('active'));
+
+document.getElementById(id)
+.classList.add('active');
+
+document.querySelectorAll('.nav button')
+.forEach(b=>b.classList.remove('ativo'));
+
+btn.classList.add('ativo');
+
+render();
+}
+
+function salvarCliente(){
+
+if(!clienteNome.value.trim()){
+alert('Digite o nome da cliente');
+return;
+}
+
+let a=get(KC);
+
+a.push({
+id:Date.now(),
+nome:clienteNome.value,
+tel:clienteTel.value,
+obs:clienteObs.value
+});
+
+set(KC,a);
+
+clienteNome.value='';
+clienteTel.value='';
+clienteObs.value='';
+
+render();
+}
+
+function salvarAgendamento(){
+
+if(!agCliente.value){
+alert('Cadastre uma cliente primeiro');
+return;
+}
+
+let a=get(KA);
+
+a.push({
+id:Date.now(),
+cliente:agCliente.value,
+proc:agProc.value,
+data:agData.value,
+hora:agHora.value,
+valor:agValor.value,
+status:agStatus.value,
+obs:agObs.value
+});
+
+set(KA,a);
+
+agData.value='';
+agHora.value='';
+agValor.value='';
+agObs.value='';
+
+render();
+}
+
+function salvarMov(){
+
+let f=get(KF);
+
+f.push({
+id:Date.now(),
+tipo:movTipo.value,
+valor:movValor.value,
+desc:movDesc.value,
+data:finData.value || hoje()
+});
+
+set(KF,f);
+
+movValor.value='';
+movDesc.value='';
+
+render();
+}
+
+function excluir(k,id){
+
+set(k,get(k).filter(x=>x.id!=id));
+
+render();
+}
+
+function render(){
+
+let clientes=get(KC);
+let agenda=get(KA);
+let fin=get(KF);
+
+document.getElementById('totalClientes').innerText=clientes.length;
+
+document.getElementById('totalHoje').innerText=
+agenda.filter(a=>a.data==hoje()).length;
+
+document.getElementById('totalMes').innerText=
+agenda.length;
+
+agCliente.innerHTML='';
+
+clientes.forEach(c=>{
+
+agCliente.innerHTML+=`
+<option value="${c.id}">
+${c.nome}
+</option>
+`;
+
+});
+
+listaClientes.innerHTML='';
+
+clientes.forEach(c=>{
+
+listaClientes.innerHTML+=`
+<div class="item">
+<b>${c.nome}</b><br>
+${c.tel}<br>
+<small>${c.obs}</small><br>
+
+<button class="delete"
+onclick="excluir(KC,${c.id})">
+Excluir
+</button>
+
+</div>
+`;
+
+});
+
+listaAgenda.innerHTML='';
+listaProximos.innerHTML='';
+
+agenda.forEach(a=>{
+
+let card=`
+<div class="item">
+
+<b>${a.proc}</b><br>
+
+${a.data} às ${a.hora}<br>
+
+R$ ${a.valor}<br>
+
+${a.status}<br>
+
+<small>${a.obs}</small><br>
+
+<button class="delete"
+onclick="excluir(KA,${a.id})">
+Excluir
+</button>
+
+</div>
+`;
+
+listaAgenda.innerHTML+=card;
+listaProximos.innerHTML+=card;
+
+});
+
+let entrada=0;
+let saida=0;
+
+fin.forEach(f=>{
+
+if(f.tipo=='Entrada'){
+entrada+=Number(f.valor||0);
+}else{
+saida+=Number(f.valor||0);
+}
+
+});
+
+entradaDia.innerText=
+entrada.toLocaleString('pt-BR',{
+style:'currency',
+currency:'BRL'
+});
+
+saidaDia.innerText=
+saida.toLocaleString('pt-BR',{
+style:'currency',
+currency:'BRL'
+});
+
+saldoDia.innerText=
+(entrada-saida).toLocaleString('pt-BR',{
+style:'currency',
+currency:'BRL'
+});
+
+listaFin.innerHTML='';
+
+fin.reverse().forEach(f=>{
+
+listaFin.innerHTML+=`
+<div class="item">
+
+<b>${f.tipo}</b><br>
+
+R$ ${f.valor}<br>
+
+${f.desc}<br>
+
+${f.data}<br>
+
+<button class="delete"
+onclick="excluir(KF,${f.id})">
+Excluir
+</button>
+
+</div>
+`;
+
+});
+
+let d=new Date();
+let ano=d.getFullYear();
+let mes=d.getMonth();
+
+let dias=
+new Date(ano,mes+1,0).getDate();
+
+calendarioGrid.innerHTML='';
+
+for(let i=1;i<=dias;i++){
+
+calendarioGrid.innerHTML+=`
+<div class="day">
+${i}
+</div>
+`;
+
+}
+
+}
+
+finData.value=hoje();
+
+render();
+
+</script>
 
 </body>
 </html>
