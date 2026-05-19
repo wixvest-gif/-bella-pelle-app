@@ -1,65 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Bella Pelle Beauty</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body{
-      font-family:Arial;
-      background:#F7DDE6;
-      padding:30px;
-      color:#4A3A3A;
-    }
-    .card{
-      background:white;
-      padding:20px;
-      border-radius:20px;
-      margin-bottom:20px;
-    }
-    h1{
-      color:#C9A45C;
-    }
-    button{
-      background:#C9A45C;
-      color:white;
-      border:none;
-      padding:12px;
-      width:100%;
-      border-radius:12px;
-      margin-top:10px;
-      font-size:16px;
-    }
-    input{
-      width:100%;
-      padding:12px;
-      border-radius:10px;
-      border:1px solid #ddd;
-      margin-top:10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bella Pelle Beauty</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f9e3ea;
+margin:0;
+padding:0;
+color:#6d4c55;
+}
+
+header{
+padding:25px;
+text-align:center;
+font-size:32px;
+font-weight:bold;
+background:#f4d5df;
+}
+
+.sub{
+text-align:center;
+margin-top:-10px;
+margin-bottom:20px;
+}
+
+.container{
+padding:15px;
+}
+
+.menu{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:20px;
+}
+
+.btn{
+background:white;
+border:none;
+padding:18px;
+border-radius:18px;
+font-size:18px;
+font-weight:bold;
+color:#6d4c55;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:20px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+.box{
+background:#faf5f7;
+padding:25px;
+border-radius:20px;
+margin-bottom:15px;
+text-align:center;
+font-size:25px;
+font-weight:bold;
+}
+
+.box span{
+display:block;
+font-size:18px;
+font-weight:normal;
+margin-top:8px;
+}
+
+input{
+width:100%;
+padding:15px;
+border-radius:15px;
+border:1px solid #ddd;
+margin-bottom:10px;
+font-size:16px;
+}
+
+.salvar{
+width:100%;
+padding:18px;
+background:#c9a45c;
+color:white;
+border:none;
+border-radius:18px;
+font-size:18px;
+font-weight:bold;
+}
+
+footer{
+text-align:center;
+padding:30px;
+color:#8d7b81;
+}
+</style>
 </head>
+
 <body>
 
-<h1>Bella Pelle Beauty</h1>
+<header>Bella Pelle Beauty</header>
 
-<div class="card">
-  <h2>Novo Agendamento</h2>
+<div class="sub">
+Agenda PRO • Clientes • Financeiro
+</div>
 
-  <input placeholder="Nome da cliente">
-  <input placeholder="Procedimento">
-  <input type="date">
-  <input type="time">
+<div class="container">
 
-  <button>Salvar Agendamento</button>
+<div class="menu">
+<button class="btn">Clientes</button>
+<button class="btn">Agenda</button>
+<button class="btn">Calendário</button>
+<button class="btn">Financeiro</button>
 </div>
 
 <div class="card">
-  <h2>Financeiro</h2>
+<div class="title">Resumo da agenda</div>
 
-  <p>Entrou hoje: R$0,00</p>
-  <p>Saiu hoje: R$0,00</p>
-  <p>Saldo: R$0,00</p>
+<div class="box">
+0
+<span>Clientes</span>
 </div>
+
+<div class="box">
+0
+<span>Hoje</span>
+</div>
+
+<div class="box">
+0
+<span>Este mês</span>
+</div>
+
+</div>
+
+<div class="card">
+<div class="title">Novo agendamento</div>
+
+<input placeholder="Nome da cliente">
+<input placeholder="Procedimento">
+<input type="date">
+<input type="time">
+<input placeholder="Valor">
+
+<button class="salvar">
+Salvar Agendamento
+</button>
+
+</div>
+
+<div class="card">
+<div class="title">Financeiro</div>
+
+<div class="box">
+R$0,00
+<span>Entrou hoje</span>
+</div>
+
+<div class="box">
+R$0,00
+<span>Saiu hoje</span>
+</div>
+
+<div class="box">
+R$0,00
+<span>Saldo</span>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+Bella Pelle Beauty ©
+</footer>
 
 </body>
 </html>
